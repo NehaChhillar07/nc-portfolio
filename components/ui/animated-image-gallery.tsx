@@ -5,33 +5,42 @@ import Image from "next/image";
 
 export function AnimatedImageGallery() {
   const images = [
-    { src: "/images/avatar.gif", alt: "Avatar animation" },
-    { src: "/images/usability-testing.jpg", alt: "Usability testing session" },
+    { src: "/images/Component 132.png", alt: "Neha Portrait 1" },
+    { src: "/images/Component 133.png", alt: "Neha Portrait 2" },
+    { src: "/images/Component 134.png", alt: "Neha Portrait 3" }
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
+    }, 1500); // Change image every 1.5 seconds
 
-    return () => clearInterval(interval);
-  }, [images.length]); // Added images.length as dependency
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-[444.086px] h-[558px]">
+      {/* Image container with rotation */}
       {images.map((image, index) => (
-        <Image
-          key={image.src}
-          src={image.src}
-          alt={image.alt}
-          className={`absolute top-0 left-0 w-full h-full object-cover rounded-[18px] transition-opacity duration-500 ${
-            index === currentImageIndex ? "opacity-100" : "opacity-0"
-          }`}
-          fill
-          priority={index === 0}
-        />
+        <div
+          key={index}
+          className={`absolute inset-0 transition-all duration-500 ease-in-out
+            ${currentImageIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+          style={{ transform: 'rotate(10.24deg)' }}
+        >
+          <div className="relative w-full h-full">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              style={{ objectFit: 'contain' }}
+              priority
+              className="rounded-[4px]"
+            />
+          </div>
+        </div>
       ))}
     </div>
   );
